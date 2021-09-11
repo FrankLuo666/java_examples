@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 *@Date: 2021/8/31 16:36
 */
 @Controller
-public class FileController {
+public class FileUploadAndDownloadController {
 
     @RequestMapping("/")
     public String init(){
