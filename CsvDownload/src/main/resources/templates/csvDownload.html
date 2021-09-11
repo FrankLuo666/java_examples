@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CSV download</title>
+</head>
+<body>
+<div id="csvDownload"
+     style="background-color: goldenrod;color: white;width: 35%;height:30px; cursor: pointer;text-align: center;font-size: 20px;">
+    CSV Download
+</div>
+
+</body>
+<script type="text/javascript" src="./js/temp_jQuery3.6.0.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#csvDownload").click(function () {
+            $.get({
+                url: "/csvDownloadAjax",
+                success: function (result) {
+                    console.log("success");
+                    console.log(result.toString());
+                    /*方式一：*/
+                    window.location.href = "/csvDownloadAjax";
+
+                    /*方式二：*/
+                    /* UTF-8 BOM: "\uFEFF"+content */
+                    // funDownload("\uFEFF" + result.toString(), "user.csv");
+                },
+                error: function () {
+                    console.log("failed");
+                }
+            })
+        });
+    });
+
+    var funDownload = function (content, filename) {
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement('a');
+        eleLink.download = filename;
+        eleLink.style.display = 'none';
+        // 字符内容转变成blob地址
+        var blob = new Blob([content]);
+        eleLink.href = URL.createObjectURL(blob);
+        // 触发点击
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
+    };
+</script>
+</html>
